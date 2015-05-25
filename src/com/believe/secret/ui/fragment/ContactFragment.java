@@ -43,6 +43,7 @@ import com.believe.secret.ui.MapPeopleActivity;
 import com.believe.secret.ui.NearPeopleActivity;
 import com.believe.secret.ui.NewFriendActivity;
 import com.believe.secret.ui.SetMyInfoActivity;
+import com.believe.secret.ui.ShakeFindFriendActivity;
 import com.believe.secret.util.CharacterParser;
 import com.believe.secret.util.CollectionUtils;
 import com.believe.secret.util.PinyinComparator;
@@ -233,7 +234,7 @@ public class ContactFragment extends FragmentBase implements OnItemClickListener
 			public void onClick(View arg0) {
 				// 附近的人列表Activity
 				//Intent intent = new Intent(getActivity(), NearPeopleActivity.class);
-				Intent intent = new Intent(getActivity(), MapPeopleActivity.class);
+				Intent intent = new Intent(getActivity(), ShakeFindFriendActivity.class);
 				startAnimActivity(intent);
 			}
 		});
