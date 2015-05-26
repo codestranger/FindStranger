@@ -20,7 +20,7 @@ public class Game_Activity extends ActivityBase {
 		setContentView(R.layout.activity_main);
 		initTopBarForLeft("╫Бцусно╥");
 		mGameView = (GamePintuLayout) findViewById(R.id.id_gameview);
-		mGameView.setBitmap(mBitmap);
+		//mGameView.setBitmap(mBitmap);
 
 	}
 }

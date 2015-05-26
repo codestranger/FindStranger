@@ -169,7 +169,7 @@ public class MapPeopleActivity extends ActivityBase {
 						ShowToast("ÃÌº”∫√”—");
 						////////////////////
 						Intent intent = new Intent(getApplicationContext(),Game_Activity.class);
-						intent.putExtra("avatar", avatarURI);
+						//intent.put("avatar", avatarURI);
 						startActivity(intent);
 					}
 				});
