@@ -88,7 +88,7 @@ public class NearPeopleActivity extends ActivityBase implements IXListViewListen
 			//如果你不想查询性别为女的用户，可以将equalProperty设为null或者equalObj设为null即可
 			userManager.queryKiloMetersListByPage(isUpdate,0,"location", longtitude, latitude, true,QUERY_KILOMETERS,"sex",false,new FindListener<User>() {
 			//此方法默认查询所有带地理位置信息的且性别为女的用户列表，如果你不想包含好友列表的话，将查询条件中的isShowFriends设置为false就行
-//			userManager.queryNearByListByPage(isUpdate,0,"location", longtitude, latitude, true,"sex",false,new FindListener<User>() {
+
 
 				@Override
 				public void onSuccess(List<User> arg0) {

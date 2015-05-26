@@ -3,6 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
-
+        <include
+        android:id="@+id/common_actionbar"
+        layout="@layout/include_action_bar" />
+	    <TextView 
+		    android:id="@+id/tv_shake"
+	        android:layout_height="wrap_content"
+	        android:layout_width="match_parent"
+	        android:text="摇一摇界面"
+	        android:textSize="50sp"
+        />
 </LinearLayout>
