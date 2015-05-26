@@ -25,6 +25,7 @@ import com.believe.secret.bean.User;
 import com.believe.secret.util.ImageLoadOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -53,6 +54,7 @@ public class MapPeopleActivity extends ActivityBase {
 	private Button pop_adduser;
 	private PopupWindow infoPopupWindow ;
 	private BmobGeoPoint location;
+	private String avatarURI;
 	
 	private List<User> nears = ShakeFindFriendActivity.nears;
 	@Override
@@ -152,6 +154,7 @@ public class MapPeopleActivity extends ActivityBase {
 				 * 获取头像
 				 */
 				String avatar = user.getAvatar();
+				avatarURI = avatar;
 				if (avatar != null && !avatar.equals("")) {
 					ImageLoader.getInstance().displayImage(avatar, pop_avatar,
 							ImageLoadOptions.getOptions());
@@ -165,6 +168,9 @@ public class MapPeopleActivity extends ActivityBase {
 					public void onClick(View v) {
 						ShowToast("添加好友");
 						////////////////////
+						Intent intent = new Intent(getApplicationContext(),Game_Activity.class);
+						intent.putExtra("avatar", avatarURI);
+						startActivity(intent);
 					}
 				});
 				return false;

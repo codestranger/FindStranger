@@ -38,7 +38,12 @@ import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.believe.secret.bean.User;
@@ -52,6 +57,8 @@ public class ShakeFindFriendActivity extends ActivityBase{
 	public static List<User> nears = new ArrayList<User>();
 	public static double latitude;
 	public static double longitude;
+	private RelativeLayout mImgUp;  
+    private RelativeLayout mImgDn;
 	LocationClient mLocationClient = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +69,6 @@ public class ShakeFindFriendActivity extends ActivityBase{
 		sensorManager = (SensorManager) getSystemService (Context.SENSOR_SERVICE);
 		Sensor sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 		sensorManager.registerListener(listener, sensor, SensorManager. SENSOR_DELAY_NORMAL);
-		tv = (TextView)findViewById(R.id.tv_shake);
 		//开启定位
 		mLocationClient = new LocationClient(this);  
 		BDLocationListener myListener = new BDLocationListener() {
@@ -81,8 +87,10 @@ public class ShakeFindFriendActivity extends ActivityBase{
 		option.setCoorType("bd09ll");//返回的定位结果是百度经纬度,默认值gcj02
 		mLocationClient.setLocOption(option);
 		mLocationClient.start();
-		
-		tv.setOnClickListener(new OnClickListener() {
+
+		mImgUp = (RelativeLayout) findViewById(R.id.shakeImgUp);  
+        mImgDn = (RelativeLayout) findViewById(R.id.shakeImgDown); 
+		mImgUp.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
@@ -91,7 +99,6 @@ public class ShakeFindFriendActivity extends ActivityBase{
 				
 			}
 		});
-		
 	}
 	/**
 	 * 停止获取位置
@@ -144,7 +151,7 @@ public class ShakeFindFriendActivity extends ActivityBase{
 	private boolean getNearPeople(final boolean isUpdate){
 		Log.d("Shake", "进入获取周围人的代码");
 		
-
+		startAnim();
 		userManager.queryKiloMetersListByPage(isUpdate,0,"location", longitude, latitude, true,QUERY_KILOMETERS,"sex",false,new FindListener<User>() {
 			//此方法默认查询所有带地理位置信息的且性别为女的用户列表，如果你不想包含好友列表的话，将查询条件中的isShowFriends设置为false就行
 
@@ -188,5 +195,25 @@ public class ShakeFindFriendActivity extends ActivityBase{
 		Intent intent = new Intent(this,MapPeopleActivity.class);
 		startActivity(intent);
 	}
-
+	 public void startAnim () {   //定义摇一摇动画动画  
+	        AnimationSet animup = new AnimationSet(true);  
+	        TranslateAnimation mytranslateanimup0 = new TranslateAnimation(Animation.RELATIVE_TO_SELF,0f,Animation.RELATIVE_TO_SELF,0f,Animation.RELATIVE_TO_SELF,0f,Animation.RELATIVE_TO_SELF,-0.5f);  
+	        mytranslateanimup0.setDuration(1000);  
+	        TranslateAnimation mytranslateanimup1 = new TranslateAnimation(Animation.RELATIVE_TO_SELF,0f,Animation.RELATIVE_TO_SELF,0f,Animation.RELATIVE_TO_SELF,0f,Animation.RELATIVE_TO_SELF,+0.5f);  
+	        mytranslateanimup1.setDuration(1000);  
+	        mytranslateanimup1.setStartOffset(1000);  
+	        animup.addAnimation(mytranslateanimup0);  
+	        animup.addAnimation(mytranslateanimup1);  
+	        mImgUp.startAnimation(animup);  
+	          
+	        AnimationSet animdn = new AnimationSet(true);  
+	        TranslateAnimation mytranslateanimdn0 = new TranslateAnimation(Animation.RELATIVE_TO_SELF,0f,Animation.RELATIVE_TO_SELF,0f,Animation.RELATIVE_TO_SELF,0f,Animation.RELATIVE_TO_SELF,+0.5f);  
+	        mytranslateanimdn0.setDuration(1000);  
+	        TranslateAnimation mytranslateanimdn1 = new TranslateAnimation(Animation.RELATIVE_TO_SELF,0f,Animation.RELATIVE_TO_SELF,0f,Animation.RELATIVE_TO_SELF,0f,Animation.RELATIVE_TO_SELF,-0.5f);  
+	        mytranslateanimdn1.setDuration(1000);  
+	        mytranslateanimdn1.setStartOffset(1000);  
+	        animdn.addAnimation(mytranslateanimdn0);  
+	        animdn.addAnimation(mytranslateanimdn1);  
+	        mImgDn.startAnimation(animdn);    
+	    }  
 }
