@@ -25,6 +25,8 @@ public class BmobConstants {
 	/**
 	 * 拍照回调
 	 */
+	public static final int TAKE_PHOTO = 1;
+	public static final int CROP_PHOTO = 2;
 	public static final int REQUESTCODE_UPLOADAVATAR_CAMERA = 1;//拍照修改头像
 	public static final int REQUESTCODE_UPLOADAVATAR_LOCATION = 2;//本地相册修改头像
 	public static final int REQUESTCODE_UPLOADAVATAR_CROP = 3;//系统裁剪头像

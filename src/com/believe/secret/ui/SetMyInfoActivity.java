@@ -1,6 +1,8 @@
 package com.believe.secret.ui;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -9,9 +11,11 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
@@ -36,6 +40,7 @@ import cn.bmob.im.BmobChatManager;
 import cn.bmob.im.db.BmobDB;
 import cn.bmob.im.inteface.MsgTag;
 import cn.bmob.im.util.BmobLog;
+import cn.bmob.v3.Bmob;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.PushListener;
@@ -51,6 +56,7 @@ import com.believe.secret.util.PhotoUtil;
 import com.believe.secret.view.dialog.DialogTips;
 import com.believe.secret.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.believe.secret.util.ImageTools;
 
 /**
  * 个人资料页面
@@ -64,6 +70,11 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 @SuppressLint("SimpleDateFormat")
 public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 
+	private Uri imageUri;
+	public static final int TAKE_PHOTO = 1;
+	public static final int CROP_PHOTO = 2;
+	public static final int CHOOSE_PICTURE = 3;
+	private static final int SCALE = 5;//照片缩小比例
 	TextView tv_set_name, tv_set_nick, tv_set_gender;
 	ImageView iv_set_avator, iv_arraw, iv_nickarraw;
 	LinearLayout layout_all;
@@ -73,6 +84,7 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 
 	String from = "";
 	String username = "";
+	String path = "/sdcard/tempImage.jpg";
 	User user;
 
 	@Override
@@ -395,22 +407,36 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 						R.color.base_color_text_white));
 				layout_photo.setBackgroundDrawable(getResources().getDrawable(
 						R.drawable.pop_bg_press));
-				File dir = new File(BmobConstants.MyAvatarDir);
+				/*File dir = new File(BmobConstants.MyAvatarDir,"dir.jpg");
 				if (!dir.exists()) {
 					dir.mkdirs();
 				}
 				// 原图
 				File file = new File(dir, new SimpleDateFormat("yyMMddHHmmss")
 						.format(new Date()));
-				filePath = file.getAbsolutePath();// 获取相片的保存路径
-				Uri imageUri = Uri.fromFile(file);
-
-				Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+				filePath = file.getAbsolutePath();// 获取相片的保存路径*/
+				File outputImage = new File(Environment. getExternalStorageDirectory(), 
+						"tempImage.jpg");
+				try {
+					if (outputImage.exists()) {
+						outputImage.delete();
+					}
+					outputImage.createNewFile();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				imageUri = Uri.fromFile(outputImage);
+				Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+				intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+				startActivityForResult(intent, TAKE_PHOTO); // 启动相机程序
+			}
+		});
+			/*	Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 				intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
 				startActivityForResult(intent,
 						BmobConstants.REQUESTCODE_UPLOADAVATAR_CAMERA);
 			}
-		});
+		});*/
 		layout_choose.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -421,14 +447,25 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 						R.color.base_color_text_white));
 				layout_choose.setBackgroundDrawable(getResources().getDrawable(
 						R.drawable.pop_bg_press));
-				Intent intent = new Intent(Intent.ACTION_PICK, null);
-				intent.setDataAndType(
-						MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-				startActivityForResult(intent,
-						BmobConstants.REQUESTCODE_UPLOADAVATAR_LOCATION);
+				File outputImage = new File(Environment. getExternalStorageDirectory(), 
+						"tempImage.jpg");
+				try {
+					if (outputImage.exists()) {
+						outputImage.delete();
+					}
+					outputImage.createNewFile();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				imageUri = Uri.fromFile(outputImage);
+				Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+				intent.setDataAndType(imageUri, "image/*");
+				intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+				startActivityForResult(intent, CHOOSE_PICTURE);
 			}
 		});
 
+	
 		avatorPop = new PopupWindow(view, mScreenWidth, 600);
 		avatorPop.setTouchInterceptor(new OnTouchListener() {
 			@Override
@@ -457,7 +494,7 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 	 * @return void
 	 * @throws
 	 */
-	private void startImageAction(Uri uri, int outputX, int outputY,
+	/*private void startImageAction(Uri uri, int outputX, int outputY,
 			int requestCode, boolean isCrop) {
 		Intent intent = null;
 		if (isCrop) {
@@ -481,10 +518,9 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 
 	Bitmap newBitmap;
 	boolean isFromCamera = false;// 区分拍照旋转
-	int degree = 0;
+	int degree = 0;/*
 
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+/*	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
 		switch (requestCode) {
@@ -547,7 +583,62 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 
 		}
 	}
-
+*/
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		switch (requestCode) {
+		case TAKE_PHOTO:
+			if (resultCode == RESULT_OK) {
+				Intent intent = new Intent("com.android.camera.action.CROP");
+				intent.setDataAndType(imageUri, "image/*");
+				intent.putExtra("scale", true);
+				intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+				startActivityForResult(intent, CROP_PHOTO); // 启动裁剪程序
+			}
+			break;
+		case CROP_PHOTO:
+			if (resultCode == RESULT_OK) {
+				try {
+					Bitmap bitmap = BitmapFactory.decodeStream (getContentResolver()
+							.openInputStream(imageUri));
+					uploadAvatar();
+					//picture.setImageBitmap(bitmap); // 将裁剪后的照片显示出来
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				}
+			}
+			break;
+		case CHOOSE_PICTURE:
+			ContentResolver resolver = getContentResolver();
+			//照片的原始资源地址
+			Uri originalUri = data.getData(); 
+			//Uri imageUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory(),"tempImage.jpg"));
+            try {
+            	//使用ContentProvider通过URI获取原始图片
+				Bitmap photo = MediaStore.Images.Media.getBitmap(resolver, originalUri);
+				if (photo != null) {
+					//为防止原始图片过大导致内存溢出，这里先缩小原图显示，然后释放原始Bitmap占用的内存
+					Bitmap smallBitmap = ImageTools.zoomBitmap(photo, photo.getWidth() / SCALE, photo.getHeight() / SCALE);
+					//释放原始图片占用的内存，防止out of memory异常发生
+					photo.recycle();
+					
+				//	iv_image.setImageBitmap(smallBitmap);
+					
+				}
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}  
+            Intent intent = new Intent("com.android.camera.action.CROP");
+			intent.setDataAndType(originalUri, "image/*");
+			intent.putExtra("scale", true);
+			intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+			startActivityForResult(intent, CROP_PHOTO); // 启动裁剪程序
+			break;
+		default:
+			break;
+		}
+    }
 	private void uploadAvatar() {
 		BmobLog.i("头像地址：" + path);
 		final BmobFile bmobFile = new BmobFile(new File(path));
@@ -595,14 +686,14 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 		});
 	}
 
-	String path;
+	//String path;
 
 	/**
 	 * 保存裁剪的头像
 	 * 
 	 * @param data
 	 */
-	private void saveCropAvator(Intent data) {
+/*	private void saveCropAvator(Intent data) {
 		Bundle extras = data.getExtras();
 		if (extras != null) {
 			Bitmap bitmap = extras.getParcelable("data");
@@ -625,6 +716,6 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 				}
 			}
 		}
-	}
+	}*/
 
 }
