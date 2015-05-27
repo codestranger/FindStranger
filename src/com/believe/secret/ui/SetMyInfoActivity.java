@@ -407,14 +407,6 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 						R.color.base_color_text_white));
 				layout_photo.setBackgroundDrawable(getResources().getDrawable(
 						R.drawable.pop_bg_press));
-				/*File dir = new File(BmobConstants.MyAvatarDir,"dir.jpg");
-				if (!dir.exists()) {
-					dir.mkdirs();
-				}
-				// 原图
-				File file = new File(dir, new SimpleDateFormat("yyMMddHHmmss")
-						.format(new Date()));
-				filePath = file.getAbsolutePath();// 获取相片的保存路径*/
 				File outputImage = new File(Environment. getExternalStorageDirectory(), 
 						"tempImage.jpg");
 				try {
@@ -431,12 +423,6 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 				startActivityForResult(intent, TAKE_PHOTO); // 启动相机程序
 			}
 		});
-			/*	Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-				intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-				startActivityForResult(intent,
-						BmobConstants.REQUESTCODE_UPLOADAVATAR_CAMERA);
-			}
-		});*/
 		layout_choose.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -494,96 +480,6 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 	 * @return void
 	 * @throws
 	 */
-	/*private void startImageAction(Uri uri, int outputX, int outputY,
-			int requestCode, boolean isCrop) {
-		Intent intent = null;
-		if (isCrop) {
-			intent = new Intent("com.android.camera.action.CROP");
-		} else {
-			intent = new Intent(Intent.ACTION_GET_CONTENT, null);
-		}
-		intent.setDataAndType(uri, "image/*");
-		intent.putExtra("crop", "true");
-		intent.putExtra("aspectX", 1);
-		intent.putExtra("aspectY", 1);
-		intent.putExtra("outputX", outputX);
-		intent.putExtra("outputY", outputY);
-		intent.putExtra("scale", true);
-		intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-		intent.putExtra("return-data", true);
-		intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
-		intent.putExtra("noFaceDetection", true); // no face detection
-		startActivityForResult(intent, requestCode);
-	}
-
-	Bitmap newBitmap;
-	boolean isFromCamera = false;// 区分拍照旋转
-	int degree = 0;/*
-
-/*	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO Auto-generated method stub
-		super.onActivityResult(requestCode, resultCode, data);
-		switch (requestCode) {
-		case BmobConstants.REQUESTCODE_UPLOADAVATAR_CAMERA:// 拍照修改头像
-			if (resultCode == RESULT_OK) {
-				if (!Environment.getExternalStorageState().equals(
-						Environment.MEDIA_MOUNTED)) {
-					ShowToast("SD不可用");
-					return;
-				}
-				isFromCamera = true;
-				File file = new File(filePath);
-				degree = PhotoUtil.readPictureDegree(file.getAbsolutePath());
-				Log.i("life", "拍照后的角度：" + degree);
-				startImageAction(Uri.fromFile(file), 200, 200,
-						BmobConstants.REQUESTCODE_UPLOADAVATAR_CROP, true);
-			}
-			break;
-		case BmobConstants.REQUESTCODE_UPLOADAVATAR_LOCATION:// 本地修改头像
-			if (avatorPop != null) {
-				avatorPop.dismiss();
-			}
-			Uri uri = null;
-			if (data == null) {
-				return;
-			}
-			if (resultCode == RESULT_OK) {
-				if (!Environment.getExternalStorageState().equals(
-						Environment.MEDIA_MOUNTED)) {
-					ShowToast("SD不可用");
-					return;
-				}
-				isFromCamera = false;
-				uri = data.getData();
-				startImageAction(uri, 200, 200,
-						BmobConstants.REQUESTCODE_UPLOADAVATAR_CROP, true);
-			} else {
-				ShowToast("照片获取失败");
-			}
-
-			break;
-		case BmobConstants.REQUESTCODE_UPLOADAVATAR_CROP:// 裁剪头像返回
-			// TODO sent to crop
-			if (avatorPop != null) {
-				avatorPop.dismiss();
-			}
-			if (data == null) {
-				// Toast.makeText(this, "取消选择", Toast.LENGTH_SHORT).show();
-				return;
-			} else {
-				saveCropAvator(data);
-			}
-			// 初始化文件路径
-			filePath = "";
-			// 上传头像
-			uploadAvatar();
-			break;
-		default:
-			break;
-
-		}
-	}
-*/
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch (requestCode) {
 		case TAKE_PHOTO:
@@ -611,7 +507,6 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 			ContentResolver resolver = getContentResolver();
 			//照片的原始资源地址
 			Uri originalUri = data.getData(); 
-			//Uri imageUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory(),"tempImage.jpg"));
             try {
             	//使用ContentProvider通过URI获取原始图片
 				Bitmap photo = MediaStore.Images.Media.getBitmap(resolver, originalUri);
@@ -685,37 +580,5 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 			}
 		});
 	}
-
-	//String path;
-
-	/**
-	 * 保存裁剪的头像
-	 * 
-	 * @param data
-	 */
-/*	private void saveCropAvator(Intent data) {
-		Bundle extras = data.getExtras();
-		if (extras != null) {
-			Bitmap bitmap = extras.getParcelable("data");
-			Log.i("life", "avatar - bitmap = " + bitmap);
-			if (bitmap != null) {
-				bitmap = PhotoUtil.toRoundCorner(bitmap, 10);
-				if (isFromCamera && degree != 0) {
-					bitmap = PhotoUtil.rotaingImageView(degree, bitmap);
-				}
-				iv_set_avator.setImageBitmap(bitmap);
-				// 保存图片
-				String filename = new SimpleDateFormat("yyMMddHHmmss")
-						.format(new Date());
-				path = BmobConstants.MyAvatarDir + filename;
-				PhotoUtil.saveBitmap(BmobConstants.MyAvatarDir, filename,
-						bitmap, true);
-				// 上传头像
-				if (bitmap != null && bitmap.isRecycled()) {
-					bitmap.recycle();
-				}
-			}
-		}
-	}*/
 
 }

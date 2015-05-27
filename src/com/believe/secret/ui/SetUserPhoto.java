@@ -42,6 +42,7 @@ public class SetUserPhoto extends BaseActivity{
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_setphoto);
+		initTopBarForLeft("设置头像");
 		btn1 = (Button)findViewById(R.id.btn1);
 		btn2 = (Button)findViewById(R.id.btn2);
 		btn1.setOnClickListener(new OnClickListener() {
@@ -120,7 +121,6 @@ public class SetUserPhoto extends BaseActivity{
 			ContentResolver resolver = getContentResolver();
 			//照片的原始资源地址
 			Uri originalUri = data.getData(); 
-			//Uri imageUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory(),"tempImage.jpg"));
             try {
             	//使用ContentProvider通过URI获取原始图片
 				Bitmap photo = MediaStore.Images.Media.getBitmap(resolver, originalUri);
@@ -129,9 +129,6 @@ public class SetUserPhoto extends BaseActivity{
 					Bitmap smallBitmap = ImageTools.zoomBitmap(photo, photo.getWidth() / SCALE, photo.getHeight() / SCALE);
 					//释放原始图片占用的内存，防止out of memory异常发生
 					photo.recycle();
-					
-				//	iv_image.setImageBitmap(smallBitmap);
-					
 				}
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
