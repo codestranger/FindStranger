@@ -4,6 +4,8 @@ package com.believe.secret.ui;
  */
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import cn.bmob.im.task.BRequest;
 import cn.bmob.v3.BmobQuery;
@@ -45,6 +47,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.believe.secret.bean.User;
 public class ShakeFindFriendActivity extends ActivityBase{
@@ -60,6 +63,8 @@ public class ShakeFindFriendActivity extends ActivityBase{
 	private RelativeLayout mImgUp;  
     private RelativeLayout mImgDn;
 	LocationClient mLocationClient = null;
+	Sensor sensor;
+	boolean flag=true;//摇一摇次数限制标记
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -67,8 +72,9 @@ public class ShakeFindFriendActivity extends ActivityBase{
 		initTopBarForLeft("摇一摇");
 		//摇一摇监听
 		sensorManager = (SensorManager) getSystemService (Context.SENSOR_SERVICE);
-		Sensor sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-		sensorManager.registerListener(listener, sensor, SensorManager. SENSOR_DELAY_NORMAL);
+		sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+		startListener();
+		//sensorManager.registerListener(listener, sensor, SensorManager. SENSOR_DELAY_NORMAL);
 		//开启定位
 		mLocationClient = new LocationClient(this);  
 		BDLocationListener myListener = new BDLocationListener() {
@@ -94,9 +100,9 @@ public class ShakeFindFriendActivity extends ActivityBase{
 			
 			@Override
 			public void onClick(View v) {
+				stopListener();
+				ShowLog("单击事件->监听器解除");
 				getNearPeople(false);
-				//callMapActivity();
-				
 			}
 		});
 	}
@@ -109,9 +115,7 @@ public class ShakeFindFriendActivity extends ActivityBase{
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		if (sensorManager != null) {
-			sensorManager.unregisterListener(listener);
-		}
+		stopListener();
 		stopLoc();
 	}
 	protected void onPause(){
@@ -126,15 +130,15 @@ public class ShakeFindFriendActivity extends ActivityBase{
 			float xValue = Math.abs(event.values[0]);
 			float yValue = Math.abs(event.values[1]);
 			float zValue = Math.abs(event.values[2]);
-			if (xValue > 11 || yValue > 11 || zValue > 11) {
+			if ((xValue > 11 || yValue > 11 || zValue > 11) && flag) {
 				// 认为用户摇动了手机，触发摇一摇逻辑
-			//	Toast.makeText(ShakeFindFriendActivity.this, "摇一摇", Toast.LENGTH_SHORT).show();
+				ShowLog("摇一摇传感器监听");
+				stopListener();
+				startAnim();
+				Toast.makeText(ShakeFindFriendActivity.this, "摇一摇", Toast.LENGTH_SHORT).show();
 		        vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-		       // long[] pattern = {0, 500, 500, 1000}; // OFF/ON /OFF/ON......                
-		       // vibrator.vibrate(pattern, -1); 
-		       vibrator.vibrate(new long[]{500,300,500,300}, -1);
-		       ShowToast("摇一摇");
-		       getNearPeople(false);
+		        vibrator.vibrate(new long[]{500,300,500,300}, -1);
+		        getNearPeople(false);
 			} 
 		}
 
@@ -151,12 +155,13 @@ public class ShakeFindFriendActivity extends ActivityBase{
 	private boolean getNearPeople(final boolean isUpdate){
 		Log.d("Shake", "进入获取周围人的代码");
 		
-		startAnim();
+
 		userManager.queryKiloMetersListByPage(isUpdate,0,"location", longitude, latitude, true,QUERY_KILOMETERS,"sex",false,new FindListener<User>() {
 			//此方法默认查询所有带地理位置信息的且性别为女的用户列表，如果你不想包含好友列表的话，将查询条件中的isShowFriends设置为false就行
 
 				@Override
 				public void onSuccess(List<User> arg0) {
+					stopListener();
 					if (CollectionUtils.isNotNull(arg0)) {
 						if(isUpdate){
 							nears.clear();
@@ -164,22 +169,33 @@ public class ShakeFindFriendActivity extends ActivityBase{
 						if(arg0.size()<BRequest.QUERY_LIMIT_COUNT){
 							
 							ShowToast("附近的人搜索完成!");
-							nears = arg0;		
-							callMapActivity();
-							stopLoc();
-							finish();
+							nears = arg0;	
+							TimerTask task = new TimerTask(){  
+							    public void run(){  
+							    	callMapActivity();
+									stopLoc(); 
+									finish();
+							    }  
+							};  
+							Timer timer = new Timer();
+							timer.schedule(task, 1000);
 						}else{
+							flag = true;
 							ShowToast("暂无附近的人!");
+							startListener();
 						}
 					}else{
-						ShowToast("暂无附近的人!");
+						flag = true;
+						ShowToast("等待获取位置!");
+						startListener();
 					}
 				}
 				
 				@Override
 				public void onError(int arg0, String arg1) {
 
-					ShowToast("暂无附近的人!");
+					ShowToast("网络或参数错误");
+					startListener();
 
 				}
 			
@@ -216,4 +232,12 @@ public class ShakeFindFriendActivity extends ActivityBase{
 	        animdn.addAnimation(mytranslateanimdn1);  
 	        mImgDn.startAnimation(animdn);    
 	    }  
+	 void stopListener(){
+			if (sensorManager != null) { //解除监听器
+				sensorManager.unregisterListener(listener);
+			}
+	 }
+		void startListener(){
+			sensorManager.registerListener(listener, sensor, SensorManager. SENSOR_DELAY_NORMAL);
+		}
 }

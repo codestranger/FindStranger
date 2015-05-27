@@ -102,7 +102,7 @@ public class BaseActivity extends FragmentActivity {
 	  * @return void
 	  * @throws
 	  */
-	public void ShowLog(String msg){
+	public static void ShowLog(String msg){
 		BmobLog.i(msg);
 	}
 	

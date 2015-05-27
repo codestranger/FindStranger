@@ -54,7 +54,7 @@ public class MapPeopleActivity extends ActivityBase {
 	private Button pop_adduser;
 	private PopupWindow infoPopupWindow ;
 	private BmobGeoPoint location;
-	private String avatarURI;
+	private User userInfo;
 	
 	private List<User> nears = ShakeFindFriendActivity.nears;
 	@Override
@@ -125,7 +125,7 @@ public class MapPeopleActivity extends ActivityBase {
 			@Override
 			public boolean onMarkerClick(Marker arg0) {
 				User user = (User)arg0.getExtraInfo().getSerializable("user");
-
+				userInfo = user;
 				pop_nickname.setText("用户名:"+user.getUsername());
 				if(user.getSex())
 					pop_sex.setText("性别:男");
@@ -154,7 +154,6 @@ public class MapPeopleActivity extends ActivityBase {
 				 * 获取头像
 				 */
 				String avatar = user.getAvatar();
-				avatarURI = avatar;
 				if (avatar != null && !avatar.equals("")) {
 					ImageLoader.getInstance().displayImage(avatar, pop_avatar,
 							ImageLoadOptions.getOptions());
@@ -166,10 +165,12 @@ public class MapPeopleActivity extends ActivityBase {
 					
 					@Override
 					public void onClick(View v) {
-						ShowToast("添加好友");
+						ShowToast("了解更多");
 						////////////////////
-						Intent intent = new Intent(getApplicationContext(),Game_Activity.class);
-						//intent.put("avatar", avatarURI);
+					Intent intent = new Intent(MapPeopleActivity.this,Game_Activity.class);
+						Bundle bundle = new Bundle();
+						bundle.putSerializable("user", userInfo);
+						intent.putExtras(bundle);
 						startActivity(intent);
 					}
 				});

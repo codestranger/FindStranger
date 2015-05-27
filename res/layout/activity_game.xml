@@ -2,9 +2,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
-        <include
+      <include
         android:id="@+id/common_actionbar"
         layout="@layout/include_action_bar" />
+
     <com.believe.secret.view.pic.GamePintuLayout
         android:id="@+id/id_gameview"
         android:layout_width="fill_parent"

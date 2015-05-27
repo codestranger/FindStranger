@@ -136,7 +136,7 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 			initTopBarForLeft("详细资料");
 			iv_nickarraw.setVisibility(View.INVISIBLE);
 			iv_arraw.setVisibility(View.INVISIBLE);
-			//不管对方是不是你的好友，均可以发送消息--BmobIM_V1.1.2修改
+			//不管对方是不是你的好友，均可以发送消息-
 			btn_chat.setVisibility(View.VISIBLE);
 			btn_chat.setOnClickListener(this);
 			if (from.equals("add")) {// 从附近的人列表添加好友--因为获取附近的人的方法里面有是否显示好友的情况，因此在这里需要判断下这个用户是否是自己的好友

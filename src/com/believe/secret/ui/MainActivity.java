@@ -256,7 +256,7 @@ public class MainActivity extends ActivityBase implements EventListener{
 			//同时提醒通知
 			String tickerText = message.getFromname()+"请求添加好友";
 			boolean isAllowVibrate = CustomApplcation.getInstance().getSpUtil().isAllowVibrate();
-			BmobNotifyManager.getInstance(this).showNotify(isAllow,isAllowVibrate,R.drawable.ic_launcher, tickerText, message.getFromname(), tickerText.toString(),NewFriendActivity.class);
+			BmobNotifyManager.getInstance(this).showNotify(isAllow,isAllowVibrate,R.drawable.icon, tickerText, message.getFromname(), tickerText.toString(),NewFriendActivity.class);
 		}
 	}
 

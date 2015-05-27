@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -22,17 +23,19 @@ import android.widget.Toast;
 import android.widget.RelativeLayout.LayoutParams;
 
 import com.believe.secret.R;
+import com.believe.secret.ui.Game_Activity;
+import com.believe.secret.ui.SetMyInfoActivity;
 
 /**
- * 2048的游戏面板，加入布局文件即可开始游戏
+ * 游戏面板，加入布局文件即可开始游戏
  * 
  * 
  */
-public class GamePintuLayout extends RelativeLayout implements OnClickListener
+public  class GamePintuLayout extends RelativeLayout implements OnClickListener
 {
 
 	/**
-	 * 设置Item的数量n*n；默认为2
+	 * 设置Item的数量n*n；默认为3
 	 */
 	private int mColumn = 3;
 	/**
@@ -346,9 +349,11 @@ public class GamePintuLayout extends RelativeLayout implements OnClickListener
 
 		if (isSuccess)
 		{
-			Toast.makeText(getContext(), "Success , Level Up !",
+			
+			Toast.makeText(getContext(), "成功",
 					Toast.LENGTH_LONG).show();
-			nextLevel();
+			Game_Activity.callNext();
+			//nextLevel();
 		}
 	}
 
@@ -357,6 +362,13 @@ public class GamePintuLayout extends RelativeLayout implements OnClickListener
 		this.removeAllViews();
 		mAnimLayout = null;
 		mColumn++;
+		initBitmap();
+		initItem();
+	}
+	public void restartGame()
+	{
+		this.removeAllViews();
+		mAnimLayout = null;
 		initBitmap();
 		initItem();
 	}
