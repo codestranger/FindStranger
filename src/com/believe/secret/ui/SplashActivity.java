@@ -23,8 +23,7 @@ import com.believe.secret.R;
  * 
  * @ClassName: SplashActivity
  * @Description: TODO
- * @author smile
- * @date 2014-6-4 ионГ9:45:43
+
  */
 public class SplashActivity extends BaseActivity {
 

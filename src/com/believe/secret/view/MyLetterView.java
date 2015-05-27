@@ -17,9 +17,8 @@ import com.believe.secret.R;
 /** 通讯录右侧快速滚动栏
    * @ClassName: MyLetterView
   * @Description: TODO
-  * @author smile
-  * @date 2014-6-7 下午1:20:33
-  */
+
+   */
 public class MyLetterView extends View {
 	// 触摸事件
 	private OnTouchingLetterChangedListener onTouchingLetterChangedListener;

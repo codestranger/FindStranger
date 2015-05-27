@@ -24,9 +24,8 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 /**Í¼Æ¬ä¯ÀÀ
   * @ClassName: ImageBrowserActivity
   * @Description: TODO
-  * @author smile
-  * @date 2014-6-19 ÏÂÎç8:22:49
-  */
+
+   */
 public class ImageBrowserActivity extends BaseActivity implements OnPageChangeListener{
 
 	private CustomViewPager mSvpPager;

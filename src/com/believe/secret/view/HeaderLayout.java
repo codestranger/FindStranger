@@ -15,9 +15,8 @@ import com.believe.secret.R;
 /** 自定义头部布局
   * @ClassName: HeaderLayout
   * @Description: TODO
-  * @author smile
-  * @date 2014-5-19 下午2:30:30
-  */
+
+   */
 public class HeaderLayout extends LinearLayout {
 	private LayoutInflater mInflater;
 	private View mHeader;

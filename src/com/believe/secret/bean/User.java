@@ -6,9 +6,8 @@ import cn.bmob.v3.datatype.BmobGeoPoint;
 /** 重载BmobChatUser对象：若还有其他需要增加的属性可在此添加
   * @ClassName: TextUser
   * @Description: TODO
-  * @author smile
-  * @date 2014-5-29 下午6:15:45
-  */
+
+   */
 public class User extends BmobChatUser {
 
 	/**

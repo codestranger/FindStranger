@@ -35,8 +35,7 @@ import com.nostra13.universalimageloader.utils.StorageUtils;
  * 自定义全局Applcation类
  * @ClassName: CustomApplcation
  * @Description: TODO
- * @author smile
- * @date 2014-5-19 下午3:25:00
+
  */
 public class CustomApplcation extends Application {
 

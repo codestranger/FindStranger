@@ -25,8 +25,7 @@ import com.believe.secret.R;
  * 
  * @ClassName: NewFriendActivity
  * @Description: TODO
- * @author smile
- * @date 2014-6-6 обнГ4:28:09
+
  */
 public class NearPeopleActivity extends ActivityBase implements IXListViewListener,OnItemClickListener {
 

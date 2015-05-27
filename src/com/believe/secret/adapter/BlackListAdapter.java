@@ -18,9 +18,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 /** ºÚÃûµ¥
   * @ClassName: BlackListAdapter
   * @Description: TODO
-  * @author smile
-  * @date 2014-6-24 ÏÂÎç5:27:14
-  */
+
+   */
 public class BlackListAdapter extends BaseListAdapter<BmobChatUser> {
 
 	public BlackListAdapter(Context context, List<BmobChatUser> list) {

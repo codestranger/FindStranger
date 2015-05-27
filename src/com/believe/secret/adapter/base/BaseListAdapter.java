@@ -21,8 +21,7 @@ import cn.bmob.im.util.BmobLog;
  * 
  * @ClassName: BaseListAdapter
  * @Description: TODO
- * @author smile
- * @date 2014-6-19 ионГ11:04:01
+
  * @param <E>
  */
 @SuppressLint("UseSparseArrays")

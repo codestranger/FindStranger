@@ -31,9 +31,8 @@ import com.believe.secret.R;
 /** »ùÀà
   * @ClassName: BaseActivity
   * @Description: TODO
-  * @author smile
-  * @date 2014-6-13 ÏÂÎç5:05:38
-  */
+
+   */
 public class BaseActivity extends FragmentActivity {
 
 	BmobUserManager userManager;

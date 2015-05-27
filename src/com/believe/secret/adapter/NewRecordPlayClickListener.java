@@ -24,8 +24,7 @@ import com.believe.secret.R;
  * 
  * @ClassName: NewRecordPlayClickListener
  * @Description: TODO
- * @author smile
- * @date 2014-7-3 ионГ11:05:06
+
  */
 public class NewRecordPlayClickListener implements View.OnClickListener {
 

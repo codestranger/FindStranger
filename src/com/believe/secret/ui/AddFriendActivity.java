@@ -27,9 +27,8 @@ import com.believe.secret.R;
 /** Ìí¼ÓºÃÓÑ
   * @ClassName: AddFriendActivity
   * @Description: TODO
-  * @author smile
-  * @date 2014-6-5 ÏÂÎç5:26:41
-  */
+
+   */
 public class AddFriendActivity extends ActivityBase implements OnClickListener,IXListViewListener,OnItemClickListener{
 	
 	EditText et_find_name;

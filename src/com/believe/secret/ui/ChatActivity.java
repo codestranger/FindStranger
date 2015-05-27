@@ -78,14 +78,12 @@ import com.believe.secret.R;
  * 
  * @ClassName: ChatActivity
  * @Description: TODO
- * @author smile
- * @date 2014-6-3 下午4:33:11
+
  */
 /**
  * @ClassName: ChatActivity
  * @Description: TODO
- * @author smile
- * @date 2014-6-23 下午3:28:49
+
  */
 public class ChatActivity extends ActivityBase implements OnClickListener,
 		IXListViewListener, EventListener {
@@ -204,9 +202,8 @@ public class ChatActivity extends ActivityBase implements OnClickListener,
 	 * 长按说话
 	 * @ClassName: VoiceTouchListen
 	 * @Description: TODO
-	 * @author smile
-	 * @date 2014-7-1 下午6:10:16
-	 */
+
+		 */
 	class VoiceTouchListen implements View.OnTouchListener {
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {

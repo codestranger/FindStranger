@@ -25,8 +25,7 @@ import com.believe.secret.R;
 /**
  * @ClassName: LoginActivity
  * @Description: TODO
- * @author smile
- * @date 2014-6-3 обнГ4:41:42
+
  */
 public class LoginActivity extends BaseActivity implements OnClickListener {
 

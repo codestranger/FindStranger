@@ -42,9 +42,8 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 /** 聊天适配器
   * @ClassName: MessageChatAdapter
   * @Description: TODO
-  * @author smile
-  * @date 2014-5-28 下午5:34:07
-  */
+
+   */
 public class MessageChatAdapter extends BaseListAdapter<BmobMsg> {
 
 	//8种Item的类型

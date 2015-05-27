@@ -22,8 +22,7 @@ import com.believe.secret.R;
  * 
  * @ClassName: BlackListActivity
  * @Description: TODO
- * @author smile
- * @date 2014-6-24 обнГ5:17:50
+
  */
 public class BlackListActivity extends ActivityBase implements OnItemClickListener {
 

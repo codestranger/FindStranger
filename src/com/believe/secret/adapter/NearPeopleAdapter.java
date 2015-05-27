@@ -22,8 +22,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
  * 
  * @ClassName: BlackListAdapter
  * @Description: TODO
- * @author smile
- * @date 2014-6-24 обнГ5:27:14
+
  */
 public class NearPeopleAdapter extends BaseListAdapter<User> {
 

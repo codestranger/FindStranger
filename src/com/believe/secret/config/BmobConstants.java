@@ -7,8 +7,8 @@ import android.os.Environment;
 /** 
   * @ClassName: BmobConstants
   * @Description: TODO
-  * @author smile
-  * @date 2014-6-19 обнГ2:48:33
+
+  * 
   */
 @SuppressLint("SdCardPath")
 public class BmobConstants {

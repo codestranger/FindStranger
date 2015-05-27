@@ -26,8 +26,7 @@ import com.believe.secret.R;
  * 
  * @ClassName: SetFragment
  * @Description: TODO
- * @author smile
- * @date 2014-6-7 обнГ1:00:27
+
  */
 @SuppressLint("SimpleDateFormat")
 public class SettingsFragment extends FragmentBase implements OnClickListener{

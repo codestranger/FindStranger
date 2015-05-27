@@ -7,9 +7,8 @@ import android.widget.GridView;
 /** 自定义GridView
   * @ClassName: CustomGridView
   * @Description: TODO
-  * @author smile
-  * @date 2014-6-17 下午4:28:55
-  */
+
+   */
 public class CustomGridView extends GridView {
 
 	public CustomGridView(Context context) {

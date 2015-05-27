@@ -21,9 +21,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 /** 好友列表
   * @ClassName: UserFriendAdapter
   * @Description: TODO
-  * @author smile
-  * @date 2014-6-12 下午3:03:40
-  */
+
+   */
 @SuppressLint("DefaultLocale")
 public class UserFriendAdapter extends BaseAdapter implements SectionIndexer {
 	private Context ct;

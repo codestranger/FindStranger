@@ -58,8 +58,8 @@ import com.believe.secret.R;
  * 联系人
  * @ClassName: ContactFragment
  * @Description: TODO
- * @author smile
- * @date 2014-6-7 下午1:02:05
+
+ * 
  */
 @SuppressLint("DefaultLocale")
 public class ContactFragment extends FragmentBase implements OnItemClickListener,OnItemLongClickListener{

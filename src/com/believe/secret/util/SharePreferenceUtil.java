@@ -7,9 +7,8 @@ import android.content.SharedPreferences;
 /** 首选项管理
   * @ClassName: SharePreferenceUtil
   * @Description: TODO
-  * @author smile
-  * @date 2014-6-10 下午4:20:14
-  */
+
+   */
 @SuppressLint("CommitPrefEdits")
 public class SharePreferenceUtil {
 	private SharedPreferences mSharedPreferences;

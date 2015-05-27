@@ -18,8 +18,7 @@ import com.believe.secret.R;
 /** 单个的下拉刷新控件
  * @ClassName: XListView
  * @Description: TODO
- * @author smile
- * @date 2014-4-24 下午5:09:02
+
  */
 public class XListView extends ListView implements OnScrollListener {
 	private float mLastY = -1; // save event y

@@ -13,8 +13,7 @@ import com.believe.secret.R;
  * 
  * @ClassName: SetNickAndSexActivity
  * @Description: TODO
- * @author smile
- * @date 2014-6-7 обнГ4:03:40
+
  */
 public class UpdateInfoActivity extends ActivityBase {
 

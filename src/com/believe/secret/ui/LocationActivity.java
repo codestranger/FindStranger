@@ -37,8 +37,7 @@ import com.believe.secret.R;
  * 
  * @ClassName: LocationActivity
  * @Description: TODO
- * @author smile
- * @date 2014-6-23 обнГ3:17:05
+
  */
 public class LocationActivity extends BaseActivity implements
 		OnGetGeoCoderResultListener {

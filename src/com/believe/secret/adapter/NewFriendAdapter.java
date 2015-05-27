@@ -28,9 +28,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 /** 新的好友请求
   * @ClassName: NewFriendAdapter
   * @Description: TODO
-  * @author smile
-  * @date 2014-6-9 下午1:26:12
-  */
+
+   */
 public class NewFriendAdapter extends BaseListAdapter<BmobInvitation> {
 
 	public NewFriendAdapter(Context context, List<BmobInvitation> list) {

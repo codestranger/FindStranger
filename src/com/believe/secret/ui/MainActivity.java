@@ -30,8 +30,7 @@ import com.believe.secret.R;
  * µÇÂ½
  * @ClassName: MainActivity
  * @Description: TODO
- * @author smile
- * @date 2014-5-29 ÏÂÎç2:45:35
+
  */
 public class MainActivity extends ActivityBase implements EventListener{
 

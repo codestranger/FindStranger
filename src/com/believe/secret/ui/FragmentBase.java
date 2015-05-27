@@ -21,9 +21,8 @@ import com.believe.secret.R;
 /** Fragmenet »ùÀà
   * @ClassName: FragmentBase
   * @Description: TODO
-  * @author smile
-  * @date 2014-5-22 ÏÂÎç2:43:50
-  */
+
+   */
 public abstract class FragmentBase extends Fragment {
 	
 	public BmobUserManager userManager;

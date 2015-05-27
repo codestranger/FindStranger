@@ -25,9 +25,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 /** »á»°ÊÊÅäÆ÷
   * @ClassName: MessageRecentAdapter
   * @Description: TODO
-  * @author smile
-  * @date 2014-6-7 ÏÂÎç2:34:10
-  */
+
+   */
 public class MessageRecentAdapter extends ArrayAdapter<BmobRecent> implements Filterable{
 	
 	private LayoutInflater inflater;

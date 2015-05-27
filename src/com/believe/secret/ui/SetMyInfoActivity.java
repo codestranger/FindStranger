@@ -63,8 +63,8 @@ import com.believe.secret.util.ImageTools;
  * 
  * @ClassName: SetMyInfoActivity
  * @Description: TODO
- * @author smile
- * @date 2014-6-10 обнГ2:55:19
+
+ * 
  */
 @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 @SuppressLint("SimpleDateFormat")
