@@ -1,8 +1,11 @@
 package com.believe.secret.ui;
 
+import java.io.File;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -11,19 +14,25 @@ import android.widget.EditText;
 import cn.bmob.im.bean.BmobChatUser;
 import cn.bmob.im.util.BmobLog;
 import cn.bmob.v3.BmobInstallation;
+import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
+import cn.bmob.v3.listener.UploadFileListener;
 
 import com.believe.secret.bean.User;
 import com.believe.secret.config.BmobConstants;
 import com.believe.secret.util.CommonUtils;
+import com.believe.secret.util.ImageLoadOptions;
 import com.believe.secret.R;
+import com.believe.secret.ui.SetMyInfoActivity;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class RegisterActivity extends BaseActivity {
 
 	Button btn_register;
 	EditText et_username, et_password, et_email;
 	BmobChatUser currentUser;
-
+	String path = Environment.getExternalStorageDirectory()+"/tempImage.jpg";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -98,6 +107,7 @@ public class RegisterActivity extends BaseActivity {
 				//发广播通知登陆页面退出
 				sendBroadcast(new Intent(BmobConstants.ACTION_REGISTER_SUCCESS_FINISH));
 				// 启动主页
+				uploadAvatar();
 				Intent intent = new Intent(RegisterActivity.this,MainActivity.class);
 				startActivity(intent);
 				finish();
@@ -112,6 +122,59 @@ public class RegisterActivity extends BaseActivity {
 				progress.dismiss();
 			}
 		});
+	}
+	private void uploadAvatar() {
+		BmobLog.i("头像地址：" + path);
+		final BmobFile bmobFile = new BmobFile(new File(path));
+		bmobFile.upload(this, new UploadFileListener() {
+
+			@Override
+			public void onSuccess() {
+				// TODO Auto-generated method stub
+				String url = bmobFile.getFileUrl();
+				// 更新BmobUser对象
+				updateUserAvatar(url);
+			}
+
+			@Override
+			public void onProgress(Integer arg0) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onFailure(int arg0, String msg) {
+				// TODO Auto-generated method stub
+				ShowToast("头像上传失败：" + msg);
+			}
+		});
+	}
+	private void updateUserAvatar(final String url) {
+		User user = (User) userManager.getCurrentUser(User.class);
+		user.setAvatar(url);
+		user.update(this, new UpdateListener() {
+			@Override
+			public void onSuccess() {
+				// TODO Auto-generated method stub
+				ShowToast("头像更新成功！");
+				// 更新头像
+				refreshAvatar(url);
+			}
+
+			@Override
+			public void onFailure(int code, String msg) {
+				// TODO Auto-generated method stub
+				ShowToast("头像更新失败：" + msg);
+			}
+		});
+	}
+	private void refreshAvatar(String avatar) {
+		if (avatar != null && !avatar.equals("")) {
+			ImageLoader.getInstance().displayImage(avatar, SetMyInfoActivity.iv_set_avator,
+					ImageLoadOptions.getOptions());
+		} else {
+			SetMyInfoActivity.iv_set_avator.setImageResource(R.drawable.default_head);
+		}
 	}
 
 }

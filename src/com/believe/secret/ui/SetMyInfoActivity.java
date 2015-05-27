@@ -76,7 +76,7 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 	public static final int CHOOSE_PICTURE = 3;
 	private static final int SCALE = 5;//照片缩小比例
 	TextView tv_set_name, tv_set_nick, tv_set_gender;
-	ImageView iv_set_avator, iv_arraw, iv_nickarraw;
+	static ImageView iv_set_avator, iv_arraw, iv_nickarraw;
 	LinearLayout layout_all;
 
 	Button btn_chat, btn_back, btn_add_friend;
@@ -639,7 +639,7 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 			break;
 		}
     }
-	private void uploadAvatar() {
+	public void uploadAvatar() {
 		BmobLog.i("头像地址：" + path);
 		final BmobFile bmobFile = new BmobFile(new File(path));
 		bmobFile.upload(this, new UploadFileListener() {
