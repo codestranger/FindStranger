@@ -51,10 +51,14 @@ import android.widget.Toast;
 
 import com.believe.secret.bean.User;
 public class ShakeFindFriendActivity extends ActivityBase{
-	
+    //触发摇一摇的最小时间间隔  
+    private final int SHAKE_SHORTEST_TIME_INTERVAL = 5;  
+    //传感器值变化的阀值  
+    private final int SHAKE_SHORTEST_SENSOR_VALUE = 10;  
+    private long lastShakeTime = 0;  
 	private SensorManager sensorManager;
 	private Vibrator vibrator;
-	private double QUERY_KILOMETERS = 1;//默认查询1公里范围内的人
+	private double QUERY_KILOMETERS = 20;//默认查询1公里范围内的人
 	boolean isSuccess = false; //查询成功
 	private TextView tv;
 	public static List<User> nears = new ArrayList<User>();
@@ -100,6 +104,11 @@ public class ShakeFindFriendActivity extends ActivityBase{
 			
 			@Override
 			public void onClick(View v) {
+				long currentTime = System.currentTimeMillis();
+		        if (((currentTime-lastShakeTime) <= SHAKE_SHORTEST_TIME_INTERVAL) )
+		        		{  
+		            return;  
+		        }  
 				stopListener();
 				ShowLog("单击事件->监听器解除");
 				getNearPeople(false);
@@ -126,6 +135,13 @@ public class ShakeFindFriendActivity extends ActivityBase{
 
 		@Override
 		public void onSensorChanged(SensorEvent event) {
+			long currentTime = System.currentTimeMillis();  
+	        int type = event.sensor.getType();  
+	        if (((currentTime-lastShakeTime) <= SHAKE_SHORTEST_TIME_INTERVAL) ||  
+	                (type != Sensor.TYPE_ACCELEROMETER)) {  
+	            return;  
+	        }  
+	        lastShakeTime = currentTime;  
 			// 加速度可能会是负值，所以要取它们的绝对值
 			float xValue = Math.abs(event.values[0]);
 			float yValue = Math.abs(event.values[1]);

@@ -6,16 +6,25 @@
     <include
         android:id="@+id/common_actionbar"
         layout="@layout/include_action_bar" />
-    
-    <Button
-        android:id="@+id/btn1"
-        android:layout_width="fill_parent"
-        android:layout_height="@dimen/base_action_bar_height"
-        android:layout_margin="@dimen/activity_vertical_margin"
-        android:background="@drawable/btn_login_selector"
-        android:text="@string/take_photo"
-        android:textColor="@color/base_color_text_white"
-        android:textSize="@dimen/text_size_large" />
+    <ImageView android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/photo_logo"/>
+	<LinearLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:orientation="vertical"
+	    android:gravity="center">
+
+		<Button
+		    android:id="@+id/btn1"
+		    android:layout_width="fill_parent"
+		    android:layout_height="@dimen/base_action_bar_height"
+		    android:layout_margin="@dimen/activity_vertical_margin"
+		    android:background="@drawable/btn_login_selector"
+		    android:text="@string/take_photo"
+		    android:textColor="@color/base_color_text_white"
+		    android:textSize="@dimen/text_size_large" />
+
     <Button
         android:id="@+id/btn2"
         android:layout_width="fill_parent"
@@ -25,5 +34,7 @@
         android:text="@string/from_ablum"
         android:textColor="@color/base_color_text_white"
         android:textSize="@dimen/text_size_large" />
+</LinearLayout>
+    
    
 </LinearLayout>
